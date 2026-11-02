@@ -1,0 +1,10 @@
+# Reproducible CS+/CC-RH outputs; preserve the standalone programmer MOT.
+DefaultBuild/*
+!DefaultBuild/Sample_Project_RH850_S1_CAN_FD_Transfer.mot
+*.obj
+*.user
+*.mtud
+*.rcpe
+*.log
+tmp/
+.vs/
