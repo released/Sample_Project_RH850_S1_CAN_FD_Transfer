@@ -6,5 +6,6 @@ DefaultBuild/*
 *.mtud
 *.rcpe
 *.log
+/QualityReport(*).txt
 tmp/
 .vs/
