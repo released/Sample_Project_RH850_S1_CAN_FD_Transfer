@@ -89,11 +89,10 @@ Explicit channel stop/recover and tag cancellation are C APIs,not extra Tool
 commands. Settle the transaction/save diagnostics first. They do not change
 other buses or the protocol's per-port state. Error flags remain retained.
 
-## Verification
+## Hardware requirements and guides
 
-Clean CC-RH build,actual MOT/vector guards,C90 protocol/production PC
-FD64 tests and actual IRQ/queue adapter models are available.
-Hardware CAN/IRQ/timing tests are NOT RUN.
+- Linked-image guards check the generated MOT and vector layout.
+- Physical CAN, IRQ and timing behavior depends on the fitted transceiver, termination and board configuration; software models do not establish electrical acceptance.
 
 - [Custom Transfer operation](https://released.github.io/slide_simple_renesas_isp_tool/#rh850-classical-transfer)
 - [RH850 engineering](https://released.github.io/slide_boot_loader_for_RL78/#rh850-can-device)
