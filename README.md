@@ -177,3 +177,9 @@ Format in foreground code, not in an ISR or Flash P/E path.
 
 Format examples and the mode table are described in the
 [RH850 Log guide](https://released.github.io/slide_boot_loader_for_RH850/app-development.html#rh850-runtime-log).
+
+## UART0 local reset
+
+- Diagnostic UART0 uses115200,8-N-1. Terminal TX connects to device UART0 RX with a common ground.
+- Sending `z` or `Z` requests a normal MCU reset from the foreground loop.
+- App restart follows the existing Boot/App validation flow. Tool Enter Boot remains the separate update-mode operation.

@@ -6,6 +6,26 @@
 #include "r_smc_entry.h"
 #include "custom_func.h"
 #include "retarget.h"
+#define UART0_CONSOLE_RH850 1
+static void Uart0ConsoleReset(void)
+{
+    unsigned char retry;
+    DI();
+    for (retry = 0U; retry < 4U; ++retry)
+    {
+        WPROTR.PROTCMD0 = 0xA5U;
+        RESCTL.SWRESA = 1UL;
+        RESCTL.SWRESA = ~1UL;
+        RESCTL.SWRESA = 1UL;
+        __syncp();
+    }
+    for (;;)
+    {
+        NOP();
+    }
+}
+#define UART0_CONSOLE_RESET() Uart0ConsoleReset()
+#include "uart0_reset_console.inc"
 #include "device_platform.h"
 #include "can_transfer_protocol.h"
 #include "can_transfer_config.h"
@@ -103,6 +123,7 @@ void hardware_init(void)
     g_custom_ready = Device_CanInit(CAN_TRANSFER_REQUEST_ID, 0U);
     tiny_printf("RH850 CAN FD DEVICE TRANSFER: 500K/2M BRS; per-port FIFO IRQ\r\n");
     tiny_printf("%s", g_custom_ready ? "CAN init: OK\r\n" : "CAN init: FAILED\r\n");
+    tiny_printf("UART0 console: z/Z reset\r\n");
 }
 
 /* Foreground service point called repeatedly by the selected main adapter.
@@ -111,6 +132,8 @@ void hardware_init(void)
  */
 void loop(void)
 {
+    Uart0ResetPoll();
+
 
     if (!g_custom_ready)
     {
